@@ -4,14 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "gulp build && npm link"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "preferGlobal": true,
   "bin": {
-    "qcmd": "./bin/quicksetup.js"
+    "qcmd": "./bin/qcmd.js"
   },
   "devDependencies": {
     "gulp": "^4.0.0",
