@@ -1,15 +1,13 @@
 let gulp = require('gulp'), 
     insert = require('gulp-insert-lite'),
     babel = require("gulp-babel"),
-    merge = require('merge-stream')
-;
+    merge = require('merge-stream');
 
 let projects = 
     CreateProject('', 'source/', 'dist/', [
         'index',
         'cli'
-    ])
-;
+    ]);
 
 gulp.task('build', function() {
     return transpile(projects);
