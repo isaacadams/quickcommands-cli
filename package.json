@@ -1,0 +1,24 @@
+{
+  "name": "quicksetup-cli",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "preferGlobal": true,
+  "bin": {
+    "qcmd": "./bin/quicksetup.js"
+  },
+  "devDependencies": {
+    "gulp": "^4.0.0",
+    "gulp-babel": "^8.0.0",
+    "gulp-insert-lite": "^1.0.3",
+    "merge-stream": "^1.0.1",
+    "@babel/core": "^7.1.2",
+    "@babel/preset-env": "^7.1.0"
+  }
+}
