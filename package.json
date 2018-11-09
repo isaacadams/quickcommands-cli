@@ -2,13 +2,21 @@
   "name": "quickcommands-cli",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "keywords": [],
+  "author": "Isaac Adams",
+  "license": "ISC",
+  "main": "./bin/qcmd.js",
+  "homepage": "https://github.com/isaacadams/quickcommands-cli/tree/master",
+  "bugs": {
+    "url": "https://github.com/isaacadams/quickcommands-cli/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/isaacadams/quickcommands-cli.git"
+  },
   "scripts": {
     "build": "gulp build && npm link"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "preferGlobal": true,
   "bin": {
     "qcmd": "./bin/qcmd.js"
