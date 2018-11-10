@@ -3,9 +3,11 @@ let exec = require('child_process').exec;
 export function runCommand(command, callback){
     command = command.replace(/\r?\n|\r/g, " ");
     exec(command, function (err, stdout, stderr) {
-        console.log(stdout);
-        console.log(stderr);
-        callback(err);
+        log(stdout)
+        log(stderr)
+        if(err)            
+            callback(err);
+            
     });
 }
 
@@ -16,4 +18,10 @@ export function getCLIArgument(name) {
 
 export function isNullUndefinedOrEmpty(value){
     return value === null || value === undefined || value === '';
+}
+
+function log(message){
+    if(message){
+        console.log(message);
+    }
 }

@@ -21,6 +21,14 @@ var cli = function cli(arg, cb) {
     case 'git.addignore':
       gitaddignore(cb);
       break;
+
+    case 'git.report':
+      (0, _cli.runCommand)('qcmd-py', cb);
+      break;
+
+    default:
+      cb('no such command exists');
+      break;
   }
 
   function gitaddremote(cb) {

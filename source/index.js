@@ -12,7 +12,7 @@ let cli = function(arg, cb) {
         break;
 
         case 'git.report':
-        runCommand('python git.report.py');
+        runCommand('qcmd-py', cb);
         break;
 
         default:
@@ -53,7 +53,5 @@ let cli = function(arg, cb) {
     }
 
 }
-
-
 
 module.exports.cli = cli;

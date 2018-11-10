@@ -22,9 +22,9 @@ var exec = require('child_process').exec;
 function runCommand(command, callback) {
   command = command.replace(/\r?\n|\r/g, " ");
   exec(command, function (err, stdout, stderr) {
-    console.log(stdout);
-    console.log(stderr);
-    callback(err);
+    log(stdout);
+    log(stderr);
+    if (err) callback(err);
   });
 }
 
@@ -35,4 +35,10 @@ function getCLIArgument(name) {
 
 function isNullUndefinedOrEmpty(value) {
   return value === null || value === undefined || value === '';
+}
+
+function log(message) {
+  if (message) {
+    console.log(message);
+  }
 }
