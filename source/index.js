@@ -10,6 +10,14 @@ let cli = function(arg, cb) {
         case 'git.addignore':
         gitaddignore(cb);    
         break;
+
+        case 'git.report':
+        runCommand('python git.report.py');
+        break;
+
+        default:
+        cb('no such command exists')
+        break;
     }
 
 
