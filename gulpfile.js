@@ -5,8 +5,8 @@ let gulp = require('gulp'),
 
 let projects = 
     CreateProject('', 'source/', 'dist/', [
-        'index',
-        'cli'
+        'cli',
+        'utilities'
     ]);
 
 gulp.task('build', function() {

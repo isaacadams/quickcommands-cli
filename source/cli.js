@@ -1,27 +1,57 @@
-let exec = require('child_process').exec;
+import { runCommand, getCLIArgument, isNullUndefinedOrEmpty }  from './utilities';
 
-export function runCommand(command, callback){
-    command = command.replace(/\r?\n|\r/g, " ");
-    exec(command, function (err, stdout, stderr) {
-        log(stdout)
-        log(stderr)
-        if(err)            
-            callback(err);
-            
-    });
-}
+let cli = function (arg, cb) {
 
-export function getCLIArgument(name) {
-    var i = process.argv.indexOf(`--${name}`);
-    return (i>-1) ? process.argv[i+1] : null;
-}
+    switch (arg) {
+        case 'git.addremote':
+            gitaddremote(cb);
+            break;
 
-export function isNullUndefinedOrEmpty(value){
-    return value === null || value === undefined || value === '';
-}
+        case 'git.addignore':
+            gitaddignore(cb);
+            break;
 
-function log(message){
-    if(message){
-        console.log(message);
+        case 'git.report':
+            runCommand('qcmd-py', cb);
+            break;
+
+        default:
+            cb('no such command exists');
+            break;
     }
-}
+
+
+    function gitaddremote(cb) {
+        let nickname = getCLIArgument('nickname');
+        let link = getCLIArgument('link');
+
+        if (isNullUndefinedOrEmpty(nickname) || isNullUndefinedOrEmpty(link)) {
+            return cb('required arguments --nickname and --link are missing');
+        }
+
+        let command = `
+            git checkout master &&
+            git remote add ${nickname} ${link} &&
+            git fetch ${nickname} &&
+            git pull ${nickname} master --allow-unrelated-histories &&
+            git branch -u ${nickname}/master master &&
+            git add *
+            git push
+        `;
+
+        runCommand(command, cb);
+    }
+
+    function gitaddignore(cb) {
+        let command = `
+            echo node_modules/>> .gitignore && 
+            git reset && 
+            git add .gitignore && 
+            git commit -m "added git ignore and ignoring node_modules folder"
+        `;
+        runCommand(command, cb);
+    }
+
+};
+
+module.exports.cli = cli;

@@ -10,35 +10,43 @@
 
 "use strict";
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.runCommand = runCommand;
-exports.getCLIArgument = getCLIArgument;
-exports.isNullUndefinedOrEmpty = isNullUndefinedOrEmpty;
+var _utilities = require("./utilities");
 
-var exec = require('child_process').exec;
+var cli = function cli(arg, cb) {
+  switch (arg) {
+    case 'git.addremote':
+      gitaddremote(cb);
+      break;
 
-function runCommand(command, callback) {
-  command = command.replace(/\r?\n|\r/g, " ");
-  exec(command, function (err, stdout, stderr) {
-    log(stdout);
-    log(stderr);
-    if (err) callback(err);
-  });
-}
+    case 'git.addignore':
+      gitaddignore(cb);
+      break;
 
-function getCLIArgument(name) {
-  var i = process.argv.indexOf("--".concat(name));
-  return i > -1 ? process.argv[i + 1] : null;
-}
+    case 'git.report':
+      (0, _utilities.runCommand)('qcmd-py', cb);
+      break;
 
-function isNullUndefinedOrEmpty(value) {
-  return value === null || value === undefined || value === '';
-}
-
-function log(message) {
-  if (message) {
-    console.log(message);
+    default:
+      cb('no such command exists');
+      break;
   }
-}
+
+  function gitaddremote(cb) {
+    var nickname = (0, _utilities.getCLIArgument)('nickname');
+    var link = (0, _utilities.getCLIArgument)('link');
+
+    if ((0, _utilities.isNullUndefinedOrEmpty)(nickname) || (0, _utilities.isNullUndefinedOrEmpty)(link)) {
+      return cb('required arguments --nickname and --link are missing');
+    }
+
+    var command = "\n            git checkout master &&\n            git remote add ".concat(nickname, " ").concat(link, " &&\n            git fetch ").concat(nickname, " &&\n            git pull ").concat(nickname, " master --allow-unrelated-histories &&\n            git branch -u ").concat(nickname, "/master master &&\n            git add *\n            git push\n        ");
+    (0, _utilities.runCommand)(command, cb);
+  }
+
+  function gitaddignore(cb) {
+    var command = "\n            echo node_modules/>> .gitignore && \n            git reset && \n            git add .gitignore && \n            git commit -m \"added git ignore and ignoring node_modules folder\"\n        ";
+    (0, _utilities.runCommand)(command, cb);
+  }
+};
+
+module.exports.cli = cli;
