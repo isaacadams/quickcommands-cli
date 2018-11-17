@@ -5,8 +5,9 @@ def displayCommits(directory, user):
         if not os.path.isdir(directory):
             return
 
-        cmd = 'cd ' + directory + ' && git log --branches=* ' + \
-            '--author="' + user + '" --after="1 week ago" --oneline --reverse'
+        time = '1 week ago'
+
+        cmd = f"""cd {directory} && git log --branches=* --author="{user}" --after="{time}" --oneline --reverse"""
         
         commits = runCommand(cmd)
         isCommit = len(commits) > 0 and "Not a directory" not in commits and "Not a git repository" not in commits 
