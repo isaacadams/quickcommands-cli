@@ -15,7 +15,7 @@ let cli = function (arg, cb) {
         case 'git.report':
             let dirname = path.dirname(__filename);
             let abspath = path.resolve(path.join(dirname, '..'));
-            runCommand(`python "${path.join(abspath+ '/source/python/git/__init__.py')}"`, cb);
+            runCommand(`python "${path.join(abspath+ '/source/python/cli.py')}" -d C:\\source -u iadams "Isaac Adams" -t "1 week ago"`, cb);
             break;
 
         default:

@@ -27,13 +27,11 @@ var cli = function cli(arg, cb) {
       break;
 
     case 'git.report':
-      //cb(__filename);
       var dirname = _path.default.dirname(__filename);
 
-      var abspath = _path.default.resolve(_path.default.join(dirname, '..')); //cb(abspath);
+      var abspath = _path.default.resolve(_path.default.join(dirname, '..'));
 
-
-      (0, _utilities.runCommand)("python \"".concat(_path.default.join(abspath + '/source/python/git/__init__.py'), "\""), cb);
+      (0, _utilities.runCommand)("python \"".concat(_path.default.join(abspath + '/source/python/cli.py'), "\" -d C:\\source -u iadams \"Isaac Adams\" -t \"1 week ago\""), cb);
       break;
 
     default:
