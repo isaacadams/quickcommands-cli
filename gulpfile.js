@@ -4,7 +4,7 @@ let gulp = require('gulp'),
     merge = require('merge-stream');
 
 let projects = 
-    CreateProject('', 'source/', 'dist/', [
+    CreateProject('', 'source/node/', 'dist/', [
         'cli',
         'utilities'
     ]);

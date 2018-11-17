@@ -12,7 +12,7 @@ let cli = function (arg, cb) {
             break;
 
         case 'git.report':
-            runCommand('qcmd-py', cb);
+            runCommand('qcmd-py git.report', cb);
             break;
 
         default:

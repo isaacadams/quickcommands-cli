@@ -1,26 +1,18 @@
-#!/usr/bin/env python
-
 import os
-from subprocess import check_output
+from source.python.utilities import runCommand
 
-bases = ['C:\\source', 'C:\\source\\LBS']
-users = ['Isaac Adams', 'iadams']
-
-def runCommand( cmd ):      
-   return check_output(cmd, shell=True).decode("utf-8")
-
-def displayCommits(dir, user):
-        if not os.path.isdir(dir):
+def displayCommits(directory, user):
+        if not os.path.isdir(directory):
             return
 
-        cmd = 'cd ' + dir + ' && git log --branches=* ' + \
+        cmd = 'cd ' + directory + ' && git log --branches=* ' + \
             '--author="' + user + '" --after="1 week ago" --oneline --reverse'
         
         commits = runCommand(cmd)
         isCommit = len(commits) > 0 and "Not a directory" not in commits and "Not a git repository" not in commits 
 
         if isCommit:
-            print (dir)
+            print (directory)
             # Remove hash
             #commits = [' '.join(['-'] + commit.split(' ')[1:]) for commit in commits.split('\n')]
             #print ('\n'.join(commits) + '\n')
@@ -28,8 +20,8 @@ def displayCommits(dir, user):
         
         return isCommit
 
-def isGitOrNodeModules(dir):
-    return os.path.basename(dir) == ".git" or os.path.basename(dir) == "node_modules"
+def isGitOrNodeModules(directory):
+    return os.path.basename(directory) == ".git" or os.path.basename(directory) == "node_modules"
 
 def listdir_fullpath(d):
     if os.path.isdir(d):
@@ -37,7 +29,7 @@ def listdir_fullpath(d):
     
     return []
 
-def searchForRepo(parent):
+def searchForRepo(parent, users):
     for subs in listdir_fullpath(parent):
         #process each directory in the parent, unless they are .git or node_modules folder
         if isGitOrNodeModules(subs):
@@ -52,6 +44,10 @@ def searchForRepo(parent):
                     break
 
         #also check subdirectories
-        searchForRepo(subs)
+        searchForRepo(subs, users)
+    
 
-searchForRepo(bases[0])
+def gitReport(reposDir, users):
+    searchForRepo(reposDir, users)
+
+#searchForRepo(bases[0], users)

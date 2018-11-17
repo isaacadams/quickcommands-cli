@@ -23,7 +23,7 @@ var cli = function cli(arg, cb) {
       break;
 
     case 'git.report':
-      (0, _utilities.runCommand)('qcmd-py', cb);
+      (0, _utilities.runCommand)('qcmd-py git.report', cb);
       break;
 
     default:

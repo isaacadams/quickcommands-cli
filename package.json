@@ -20,7 +20,7 @@
   "preferGlobal": true,
   "bin": {
     "qcmd": "./bin/qcmd.js",
-    "qcmd-py": "./bin/git.report.py"
+    "qcmd-py": "./bin/qcmd-py.py"
   },
   "devDependencies": {
     "gulp": "^4.0.0",
