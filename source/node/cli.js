@@ -1,4 +1,5 @@
 import { runCommand, getCLIArgument, isNullUndefinedOrEmpty }  from './utilities';
+import path from 'path';
 
 let cli = function (arg, cb) {
 
@@ -12,7 +13,9 @@ let cli = function (arg, cb) {
             break;
 
         case 'git.report':
-            runCommand('qcmd-py git.report', cb);
+            let dirname = path.dirname(__filename);
+            let abspath = path.resolve(path.join(dirname, '..'));
+            runCommand(`python "${path.join(abspath+ '/source/python/git/__init__.py')}"`, cb);
             break;
 
         default:

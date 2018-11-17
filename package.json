@@ -16,12 +16,11 @@
   },
   "scripts": {
     "build": "gulp build && npm link",
-    "test-py": "python ./bin/qcmd-py.py"
+    "test": "node ./bin/qcmd.js"
   },
   "preferGlobal": true,
   "bin": {
-    "qcmd": "./bin/qcmd.js",
-    "qcmd-py": "./bin/qcmd-py.py"
+    "qcmd": "./bin/qcmd.js"
   },
   "devDependencies": {
     "gulp": "^4.0.0",

@@ -12,6 +12,10 @@
 
 var _utilities = require("./utilities");
 
+var _path = _interopRequireDefault(require("path"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 var cli = function cli(arg, cb) {
   switch (arg) {
     case 'git.addremote':
@@ -23,7 +27,13 @@ var cli = function cli(arg, cb) {
       break;
 
     case 'git.report':
-      (0, _utilities.runCommand)('qcmd-py git.report', cb);
+      //cb(__filename);
+      var dirname = _path.default.dirname(__filename);
+
+      var abspath = _path.default.resolve(_path.default.join(dirname, '..')); //cb(abspath);
+
+
+      (0, _utilities.runCommand)("python \"".concat(_path.default.join(abspath + '/source/python/git/__init__.py'), "\""), cb);
       break;
 
     default:
