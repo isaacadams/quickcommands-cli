@@ -1,15 +1,17 @@
 import { runCommand, getCLIArgument, isNullUndefinedOrEmpty }  from './utilities';
 import path from 'path';
+import program from 'commander';
+import colors from 'colors';
 
 let cli = function (arg, cb) {
 
     switch (arg) {
-        case 'git.addremote':
-            gitaddremote(cb);
+        case 'git.addremote':   
+            gitaddremote();
             break;
 
         case 'git.addignore':
-            gitaddignore(cb);
+            gitaddignore();
             break;
 
         case 'git.report':
@@ -23,18 +25,24 @@ let cli = function (arg, cb) {
             break;
     }
 
+    function gitaddremote() {
+        
+        program
+        .option('-n, --nickname <n>', 'Give the nickname for the remote repo')
+        .option('-u, --url <u>', 'Give the url that points to the remote repo')
+        .parse(process.argv); 
+            
+        let nickname = program.nickname; // getCLIArgument('nickname');
+        let url = program.url; // getCLIArgument('link');
 
-    function gitaddremote(cb) {
-        let nickname = getCLIArgument('nickname');
-        let link = getCLIArgument('link');
-
-        if (isNullUndefinedOrEmpty(nickname) || isNullUndefinedOrEmpty(link)) {
-            return cb('required arguments --nickname and --link are missing');
+        if (!nickname || !url) {
+            program.help((help) => colors.red('\nmissing required arguments!\n\n') + help);
+            //return cb('required arguments --nickname and --url are missing\n\n' + program.usage());
         }
 
         let command = `
             git checkout master &&
-            git remote add ${nickname} ${link} &&
+            git remote add ${nickname} ${url} &&
             git fetch ${nickname} &&
             git pull ${nickname} master --allow-unrelated-histories &&
             git branch -u ${nickname}/master master &&
@@ -42,7 +50,7 @@ let cli = function (arg, cb) {
             git push
         `;
 
-        runCommand(command, cb);
+        runCommand(command, null);
     }
 
     function gitaddignore(cb) {

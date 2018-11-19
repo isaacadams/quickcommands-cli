@@ -14,16 +14,20 @@ var _utilities = require("./utilities");
 
 var _path = _interopRequireDefault(require("path"));
 
+var _commander = _interopRequireDefault(require("commander"));
+
+var _colors = _interopRequireDefault(require("colors"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var cli = function cli(arg, cb) {
   switch (arg) {
     case 'git.addremote':
-      gitaddremote(cb);
+      gitaddremote();
       break;
 
     case 'git.addignore':
-      gitaddignore(cb);
+      gitaddignore();
       break;
 
     case 'git.report':
@@ -39,16 +43,22 @@ var cli = function cli(arg, cb) {
       break;
   }
 
-  function gitaddremote(cb) {
-    var nickname = (0, _utilities.getCLIArgument)('nickname');
-    var link = (0, _utilities.getCLIArgument)('link');
+  function gitaddremote() {
+    _commander.default.option('-n, --nickname <n>', 'Give the nickname for the remote repo').option('-u, --url <u>', 'Give the url that points to the remote repo').parse(process.argv);
 
-    if ((0, _utilities.isNullUndefinedOrEmpty)(nickname) || (0, _utilities.isNullUndefinedOrEmpty)(link)) {
-      return cb('required arguments --nickname and --link are missing');
+    var nickname = _commander.default.nickname; // getCLIArgument('nickname');
+
+    var url = _commander.default.url; // getCLIArgument('link');
+
+    if (!nickname || !url) {
+      _commander.default.help(function (help) {
+        return _colors.default.red('\nmissing required arguments!\n\n') + help;
+      }); //return cb('required arguments --nickname and --url are missing\n\n' + program.usage());
+
     }
 
-    var command = "\n            git checkout master &&\n            git remote add ".concat(nickname, " ").concat(link, " &&\n            git fetch ").concat(nickname, " &&\n            git pull ").concat(nickname, " master --allow-unrelated-histories &&\n            git branch -u ").concat(nickname, "/master master &&\n            git add *\n            git push\n        ");
-    (0, _utilities.runCommand)(command, cb);
+    var command = "\n            git checkout master &&\n            git remote add ".concat(nickname, " ").concat(url, " &&\n            git fetch ").concat(nickname, " &&\n            git pull ").concat(nickname, " master --allow-unrelated-histories &&\n            git branch -u ").concat(nickname, "/master master &&\n            git add *\n            git push\n        ");
+    (0, _utilities.runCommand)(command, null);
   }
 
   function gitaddignore(cb) {
