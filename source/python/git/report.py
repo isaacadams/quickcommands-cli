@@ -1,7 +1,6 @@
 import os
 from source.python.utilities import runCommand
 
-
 def isGitOrNodeModules(directory):
     return os.path.basename(directory) == ".git" or os.path.basename(directory) == "node_modules"
 
@@ -10,7 +9,7 @@ def listdir_fullpath(d):
         return [os.path.join(d, f) for f in os.listdir(d)]
     
     return []
-    
+
 
 class GitReport:
     def __init__(self, directory, users, time):
@@ -29,7 +28,7 @@ class GitReport:
             if hasgit:
                 for user in self.users:
                     #if there were commits to be displayed, then don't try another user name
-                    if self.displayCommits(subDir, user):
+                    if self.displayCommits(subDir, user, self.time):
                         break
             
             #also check subdirectories
@@ -40,11 +39,11 @@ class GitReport:
         self.searchForRepos(self.directory)
 
 
-    def displayCommits(self, directory, user):
+    def displayCommits(self, directory, user, time):
         if not os.path.isdir(directory):
             return
         
-        cmd = f"""cd {directory} && git log --branches=* --author="{user}" --after="{self.time}" --oneline --reverse"""
+        cmd = f"""cd {directory} && git log --branches=* --author="{user}" --after="{time}" --oneline --reverse"""
         
         commits = runCommand(cmd)
         isCommit = len(commits) > 0 and "Not a directory" not in commits and "Not a git repository" not in commits 
