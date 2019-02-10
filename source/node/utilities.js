@@ -32,8 +32,8 @@ export function getFullFilePath(directPathToFileFromRoot) {
     // get current directory: ../quickcommands-cli/dist
     let dirname = path.dirname(__filename);
     // go up one level to get root directory: ../quickcommands-cli
-    let abspath = path.resolve(path.join(dirname, '..'));
+    let root = path.resolve(path.join(dirname, '..'));
     // join root with the given path
-    let file = path.join(abspath, directPathToFileFromRoot);
+    let file = path.join(root, directPathToFileFromRoot);
     return file;
 }
