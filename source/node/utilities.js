@@ -1,4 +1,6 @@
-let exec = require('child_process').exec;
+
+let path = require('path');
+let { exec } = require('child_process');
 
 export function runCommand(command, callback){
     command = command.replace(/\r?\n|\r/g, " ");
@@ -24,4 +26,14 @@ function log(message){
     if(message){
         console.log(message);
     }
+}
+
+export function getFullFilePath(directPathToFileFromRoot) {
+    // get current directory: ../quickcommands-cli/dist
+    let dirname = path.dirname(__filename);
+    // go up one level to get root directory: ../quickcommands-cli
+    let abspath = path.resolve(path.join(dirname, '..'));
+    // join root with the given path
+    let file = path.join(abspath, directPathToFileFromRoot);
+    return file;
 }

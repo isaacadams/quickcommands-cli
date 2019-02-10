@@ -16,8 +16,12 @@ Object.defineProperty(exports, "__esModule", {
 exports.runCommand = runCommand;
 exports.getCLIArgument = getCLIArgument;
 exports.isNullUndefinedOrEmpty = isNullUndefinedOrEmpty;
+exports.getFullFilePath = getFullFilePath;
 
-var exec = require('child_process').exec;
+var path = require('path');
+
+var _require = require('child_process'),
+    exec = _require.exec;
 
 function runCommand(command, callback) {
   command = command.replace(/\r?\n|\r/g, " ");
@@ -41,4 +45,14 @@ function log(message) {
   if (message) {
     console.log(message);
   }
+}
+
+function getFullFilePath(directPathToFileFromRoot) {
+  // get current directory: ../quickcommands-cli/dist
+  var dirname = path.dirname(__filename); // go up one level to get root directory: ../quickcommands-cli
+
+  var abspath = path.resolve(path.join(dirname, '..')); // join root with the given path
+
+  var file = path.join(abspath, directPathToFileFromRoot);
+  return file;
 }

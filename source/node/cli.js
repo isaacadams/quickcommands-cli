@@ -1,5 +1,5 @@
-import { runCommand, getCLIArgument, isNullUndefinedOrEmpty }  from './utilities';
-import path from 'path';
+import { runCommand, getCLIArgument, isNullUndefinedOrEmpty, getFullFilePath }  from './utilities';
+//import path from 'path';
 import program from 'commander';
 import colors from 'colors';
 
@@ -15,9 +15,8 @@ let cli = function (arg, cb) {
             break;
 
         case 'git.report':
-            let dirname = path.dirname(__filename);
-            let abspath = path.resolve(path.join(dirname, '..'));
-            runCommand(`python "${path.join(abspath+ '/source/python/cli.py')}" -d C:\\source -u iadams "Isaac Adams" -t "1 week ago"`, cb);
+            let filePath = getFullFilePath('source/python/cli.py');
+            runCommand(`python "${filePath}" -d C:\\source -u iadams "Isaac Adams" -t "1 week ago"`, cb);
             break;
 
         default:

@@ -12,14 +12,13 @@
 
 var _utilities = require("./utilities");
 
-var _path = _interopRequireDefault(require("path"));
-
 var _commander = _interopRequireDefault(require("commander"));
 
 var _colors = _interopRequireDefault(require("colors"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+//import path from 'path';
 var cli = function cli(arg, cb) {
   switch (arg) {
     case 'git.addremote':
@@ -31,11 +30,8 @@ var cli = function cli(arg, cb) {
       break;
 
     case 'git.report':
-      var dirname = _path.default.dirname(__filename);
-
-      var abspath = _path.default.resolve(_path.default.join(dirname, '..'));
-
-      (0, _utilities.runCommand)("python \"".concat(_path.default.join(abspath + '/source/python/cli.py'), "\" -d C:\\source -u iadams \"Isaac Adams\" -t \"1 week ago\""), cb);
+      var filePath = (0, _utilities.getFullFilePath)('source/python/cli.py');
+      (0, _utilities.runCommand)("python \"".concat(filePath, "\" -d C:\\source -u iadams \"Isaac Adams\" -t \"1 week ago\""), cb);
       break;
 
     default:
