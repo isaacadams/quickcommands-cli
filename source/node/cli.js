@@ -31,25 +31,35 @@ let cli = function (arg, cb) {
         .option('-u, --url <u>', 'Give the url that points to the remote repo')
         .parse(process.argv); 
             
-        let nickname = program.nickname; // getCLIArgument('nickname');
-        let url = program.url; // getCLIArgument('link');
+        let nickname = program.nickname;
+        let url = program.url;
 
         if (!nickname || !url) {
             program.help((help) => colors.red('\nmissing required arguments!\n\n') + help);
-            //return cb('required arguments --nickname and --url are missing\n\n' + program.usage());
         }
+        
+        try {
+            let command = `
+                git checkout master &&
+                git remote add ${nickname} ${url} &&
+                git fetch ${nickname} &&
+                git pull ${nickname} master --allow-unrelated-histories &&
+                git branch -u ${nickname}/master master &&
+                git add *
+                git push
+            `;
 
-        let command = `
-            git checkout master &&
-            git remote add ${nickname} ${url} &&
-            git fetch ${nickname} &&
-            git pull ${nickname} master --allow-unrelated-histories &&
-            git branch -u ${nickname}/master master &&
-            git add *
-            git push
-        `;
+            runCommand(command, cb);
+        }
+        catch {
+            let command = `
+                git remote add ${nickname} ${url}
+                git push -u ${nickname} master
+            `;
 
-        runCommand(command, null);
+            runCommand(command, cb);
+        }
+        
     }
 
     function gitaddignore(cb) {
