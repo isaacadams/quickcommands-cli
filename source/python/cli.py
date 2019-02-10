@@ -2,13 +2,17 @@ import os
 import sys
 
 def addDirectoryToPaths(pathToDir, verbose = False):
+    #get the immediate parent directory name of this file
     Directory = os.path.dirname(__file__)
+    #join the parent directory to the given relative path
     Join = os.path.join(Directory, pathToDir)
+    #convert to an absolute path
     Abs = os.path.abspath(Join)
+    #add it to the system paths
     sys.path.insert(0, Abs)
     if(verbose):
-        print(f"Adding {Abs} to system paths")
-        print("System Paths:")
+        print(f"\n\nAdding '{Abs}' to system paths")
+        print("\nSystem Paths:")
         for path in sys.path:
             print(path)
 
