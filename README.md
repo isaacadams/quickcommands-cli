@@ -1,6 +1,9 @@
 # quickcommands-cli
 A cli with commands for doing daily developer activities in one command
 
+An example of how to see help information for a command: `qcmd git.addremote --help`
+
+For the node.js based commands, [commander](https://www.npmjs.com/package/commander) is used to build the options
 
 ### qcmd git.report
 - this command will run a report on all the git commits you have made from the past week
