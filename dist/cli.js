@@ -42,19 +42,23 @@ var cli = function cli(arg, cb) {
   function gitaddremote() {
     _commander.default.option('-n, --nickname <n>', 'Give the nickname for the remote repo').option('-u, --url <u>', 'Give the url that points to the remote repo').parse(process.argv);
 
-    var nickname = _commander.default.nickname; // getCLIArgument('nickname');
-
-    var url = _commander.default.url; // getCLIArgument('link');
+    var nickname = _commander.default.nickname;
+    var url = _commander.default.url;
 
     if (!nickname || !url) {
       _commander.default.help(function (help) {
         return _colors.default.red('\nmissing required arguments!\n\n') + help;
-      }); //return cb('required arguments --nickname and --url are missing\n\n' + program.usage());
-
+      });
     }
 
-    var command = "\n            git checkout master &&\n            git remote add ".concat(nickname, " ").concat(url, " &&\n            git fetch ").concat(nickname, " &&\n            git pull ").concat(nickname, " master --allow-unrelated-histories &&\n            git branch -u ").concat(nickname, "/master master &&\n            git add *\n            git push\n        ");
-    (0, _utilities.runCommand)(command, null);
+    try {
+      var command = "\n                git checkout master &&\n                git remote add ".concat(nickname, " ").concat(url, " &&\n                git fetch ").concat(nickname, " &&\n                git pull ").concat(nickname, " master --allow-unrelated-histories &&\n                git branch -u ").concat(nickname, "/master master &&\n                git add *\n                git push\n            ");
+      (0, _utilities.runCommand)(command, cb);
+    } catch (_unused) {
+      var _command = "\n                git remote add ".concat(nickname, " ").concat(url, "\n                git push -u ").concat(nickname, " master\n            ");
+
+      (0, _utilities.runCommand)(_command, cb);
+    }
   }
 
   function gitaddignore(cb) {

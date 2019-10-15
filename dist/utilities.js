@@ -51,8 +51,8 @@ function getFullFilePath(directPathToFileFromRoot) {
   // get current directory: ../quickcommands-cli/dist
   var dirname = path.dirname(__filename); // go up one level to get root directory: ../quickcommands-cli
 
-  var abspath = path.resolve(path.join(dirname, '..')); // join root with the given path
+  var root = path.resolve(path.join(dirname, '..')); // join root with the given path
 
-  var file = path.join(abspath, directPathToFileFromRoot);
+  var file = path.join(root, directPathToFileFromRoot);
   return file;
 }
