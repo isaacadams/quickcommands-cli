@@ -43,7 +43,7 @@ class GitReport:
         if not os.path.isdir(directory):
             return
         
-        cmd = f"""cd {directory} && git log --branches=* --author="{user}" --after="{time}" --oneline --reverse"""
+        cmd = f"""cd {directory} && git log --branches=* --author="{user}" --after="{time}" --oneline --reverse --pretty=format:"%Cred%ad %C(yellow)%an%Cgreen%d %Creset%s" """
         
         commits = runCommand(cmd)
         isCommit = len(commits) > 0 and "Not a directory" not in commits and "Not a git repository" not in commits 
