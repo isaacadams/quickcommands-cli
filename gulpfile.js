@@ -22,12 +22,8 @@ function CreateProject(folder, source, destination, scripts) {
     };
 }
 
-function transpile(project) {
+function transpile({folder, scripts, source, destination}) {
 
-    let folder = project.folder;
-    let scripts = project.scripts;
-    let source = project.source;
-    let destination = project.destination;
     let streams = [];
 
     //prepends a comment to the babelified .js file so that developers know to look for the source version and make changes there
