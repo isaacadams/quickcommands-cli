@@ -1,5 +1,6 @@
 import os
 import sys
+from source.python.git.report import GitReport
 
 def addDirectoryToPaths(pathToDir, verbose = False):
     #get the immediate parent directory name of this file
@@ -17,8 +18,6 @@ def addDirectoryToPaths(pathToDir, verbose = False):
             print(path)
 
 addDirectoryToPaths('../..')
-
-from source.python.git.report import GitReport
 
 import argparse 
 

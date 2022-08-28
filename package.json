@@ -15,7 +15,7 @@
     "url": "https://github.com/isaacadams/quickcommands-cli.git"
   },
   "scripts": {
-    "build": "gulp build && npm link",
+    "build": "gulp build",
     "test": "node ./bin/qcmd.js"
   },
   "preferGlobal": true,
